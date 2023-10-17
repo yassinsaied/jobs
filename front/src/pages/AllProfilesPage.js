@@ -33,69 +33,43 @@ const AllProfilesPage = () => {
       minWidth: 100,
       filter: 'agTextColumnFilter',
       editable: true,
-
-      valueGetter: (params) => {
-        return params.data.user.name;
-      },
-      valueSetter: (params) => {
-        console.log(params.data.user.name);
-        params.data.user.name = params.newValue;
-        dispatch(allProfilesActions());
-        return true;
-      },
     },
     {
       field: 'status',
       headerName: 'Status',
-      minWidth: 100,
+      minWidth: 150,
       filter: 'agTextColumnFilter',
-      valueGetter: (params) => {
-        return params.data.status;
-      },
-      valueSetter: (params) => {
-        params.data.status = params.newValue;
-        return true;
-      },
     },
+    {
+      field: 'company',
+      headerName: 'Company',
+      minWidth: 150,
+      filter: 'agTextColumnFilter',
+    },
+
     {
       field: 'user.email',
       headerName: 'Email',
-      minWidth: 100,
+      minWidth: 150,
       filter: 'agTextColumnFilter',
-      valueGetter: (params) => {
-        return params.data.user.email;
-      },
-      valueSetter: (params) => {
-        params.data.user.email = params.newValue;
-        return true;
-      },
     },
     {
       field: 'phone',
       headerName: 'Phone',
       minWidth: 50,
       filter: 'agTextColumnFilter',
-      valueGetter: (params) => {
-        return params.data.phone;
-      },
-      valueSetter: (params) => {
-        params.data.phone = params.newValue;
-        return true;
-      },
     },
     {
-      field: 'skills',
-      headerName: 'Skills',
-      minWidth: 300,
+      field: 'location',
+      headerName: 'Location',
+      minWidth: 200,
+      filter: 'agTextColumnFilter',
+    },
+    {
+      field: 'active',
+      headerName: 'Active',
+      minWidth: 50,
       filter: false,
-      valueParser: (params) => String(params.newValue),
-      valueGetter: (params) => {
-        return params.data.skills;
-      },
-      valueSetter: (params) => {
-        params.data.skills = params.newValue;
-        return true;
-      },
     },
   ]);
 
@@ -113,19 +87,10 @@ const AllProfilesPage = () => {
     []
   );
 
-  const onGridReady = useCallback(
-    (params) => {
-      // fetch('http://127.0.0.1:5000/api/profiles')
-      //   .then((resp) => resp.json())
-      //   .then((data) => {
-      //     dispatch(updateAgGridData(data));
-      //     setDatap(allProfile);
-      //   });
-      dispatch(allProfilesActions());
-      setDatap(allProfile);
-    },
-    [dispatch]
-  );
+  const onGridReady = useCallback(() => {
+    dispatch(allProfilesActions());
+    setDatap(allProfile);
+  }, [dispatch]);
 
   const onCellValueChanged = (event) => {
     const { rowIndex, colDef, newValue } = event;
@@ -144,14 +109,6 @@ const AllProfilesPage = () => {
   const onCellEditingStopped = useCallback((event) => {
     console.log('cellEditingStopped');
   }, []);
-
-  // const onCellValueChanged = useCallback((event) => {
-  //   console.log('Data after change is', event.data);
-  // }, []);
-
-  // useEffect(() => {
-  //   dispatch(allProfilesActions());
-  // }, []);
 
   return (
     <Container sx={{ py: 5 }}>

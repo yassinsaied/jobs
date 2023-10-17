@@ -317,4 +317,54 @@ router.put("/educations/:id_educ", auth, async (req, res) => {
   } catch (error) {}
 });
 
+// @rout Update api/profile/updatemany
+// description update many profiles from datatable
+//access private
+
+router.put(
+  "/updatemany",
+  [
+    auth,
+    [
+      check("educations.*.id")
+        .not()
+        .isEmpty()
+        .withMessage("identifier of profile is is required for update"),
+      check("educations.*.user")
+        .not()
+        .isEmpty()
+        .withMessage("identifier of profile is is required for update"),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.json({ errors: errors.array() });
+    }
+
+    try {
+      const profilesToUpdate = req.body.profiles;
+
+      profilesToUpdate.forEach(async (profileToUpdate) => {
+        const profile = await Profile.find({
+          _id: profileToUpdate.isDate,
+          user: profileToUpdate.user,
+        });
+
+        if (profile) {
+          const payloadToUpdate = {};
+          profileToUpdate?.company &&
+            (payloadToUpdate.company = profileToUpdate.company);
+          profileToUpdate?.phone &&
+            (payloadToUpdate.phone = profileToUpdate.phone);
+          profileToUpdate?.location &&
+            (payloadToUpdate.location = profileToUpdate.location);
+          profileToUpdate?.status &&
+            (payloadToUpdate.status = profileToUpdate.status);
+        }
+      });
+    } catch (error) {}
+  }
+);
+
 module.exports = router;
