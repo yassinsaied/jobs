@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const Profile = require("../../models/Profile");
+const User = require("../../models/User");
 const { check, validationResult } = require("express-validator");
 
 // @route GET api/profiles/me
@@ -326,14 +327,10 @@ router.put(
   [
     auth,
     [
-      check("educations.*.id")
+      check("profiles.*.user.id")
         .not()
         .isEmpty()
-        .withMessage("identifier of profile is is required for update"),
-      check("educations.*.user")
-        .not()
-        .isEmpty()
-        .withMessage("identifier of profile is is required for update"),
+        .withMessage("identifier of user is required for update"),
     ],
   ],
   async (req, res) => {
@@ -344,26 +341,45 @@ router.put(
 
     try {
       const profilesToUpdate = req.body.profiles;
+      const UpadatedData = [];
 
       profilesToUpdate.forEach(async (profileToUpdate) => {
-        const profile = await Profile.find({
-          _id: profileToUpdate.isDate,
-          user: profileToUpdate.user,
+        const {
+          userId,
+          user: userToupdate,
+          profile: profileToupdate,
+        } = profileToUpdate;
+
+        const user = await User.findByIdAndUpdate(userId, userToupdate, {
+          new: true,
         });
 
-        if (profile) {
-          const payloadToUpdate = {};
-          profileToUpdate?.company &&
-            (payloadToUpdate.company = profileToUpdate.company);
-          profileToUpdate?.phone &&
-            (payloadToUpdate.phone = profileToUpdate.phone);
-          profileToUpdate?.location &&
-            (payloadToUpdate.location = profileToUpdate.location);
-          profileToUpdate?.status &&
-            (payloadToUpdate.status = profileToUpdate.status);
+        if (!user) {
+          res.status(400).json({ message: "user Not ound" });
+        } else {
+          if (!user.profile && profileToupdate) {
+            const profile = new Profile(profileToupdate);
+            await profile.save();
+          }
+
+          if (user.profile && profileToupdate) {
+            Object.assign(user.profile, profileToupdate.profile);
+            await user.profile.save();
+          }
+
+          UpadatedData.push(user);
         }
       });
-    } catch (error) {}
+      res.status(200).json({ message: "userupdatetd", UpadatedData });
+    } catch (error) {
+      if (error.kind == "ObjectId") {
+        return res
+          .status(400)
+          .json({ errorMessage: "uou have many Ids of users not valid" });
+      }
+
+      res.status(500).send("server error");
+    }
   }
 );
 
