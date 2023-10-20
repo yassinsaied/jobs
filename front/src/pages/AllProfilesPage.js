@@ -89,7 +89,6 @@ const AllProfilesPage = () => {
 
   const onGridReady = useCallback(() => {
     dispatch(allProfilesActions());
-    setDatap(allProfile);
   }, [dispatch]);
 
   const onCellValueChanged = (event) => {
@@ -98,9 +97,13 @@ const AllProfilesPage = () => {
     dispatch(updateCellData({ rowIndex, colId: colDef.field, newValue }));
   };
 
+  // useEffect(() => {
+  //   dispatch(updateAgGridData(datap));
+  // }, [dispatch]);
+
   useEffect(() => {
-    dispatch(updateAgGridData(datap));
-  }, [dispatch]);
+    setDatap(allProfile);
+  }, [allProfile]);
 
   const onCellEditingStarted = useCallback((event) => {
     console.log('cellEditingStarted');
