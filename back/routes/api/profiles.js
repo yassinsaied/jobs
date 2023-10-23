@@ -327,7 +327,7 @@ router.put(
   [
     auth,
     [
-      check("profiles.*.user.id")
+      check("profiles.*.userId")
         .not()
         .isEmpty()
         .withMessage("identifier of user is required for update"),
@@ -341,9 +341,9 @@ router.put(
 
     try {
       const profilesToUpdate = req.body.profiles;
-      const UpadatedData = [];
+      const updatedData = [];
 
-      profilesToUpdate.forEach(async (profileToUpdate) => {
+      for (const profileToUpdate of profilesToUpdate) {
         const {
           userId,
           user: userToupdate,
@@ -367,15 +367,16 @@ router.put(
             await user.profile.save();
           }
 
-          UpadatedData.push(user);
+          updatedData.push(profileToUpdate);
         }
-      });
-      res.status(200).json({ message: "userupdatetd", UpadatedData });
+      }
+
+      res.status(200).json({ message: "users updatetd", updatedData });
     } catch (error) {
       if (error.kind == "ObjectId") {
         return res
           .status(400)
-          .json({ errorMessage: "uou have many Ids of users not valid" });
+          .json({ errorMessage: "you have many Ids of users not valid" });
       }
 
       res.status(500).send("server error");
