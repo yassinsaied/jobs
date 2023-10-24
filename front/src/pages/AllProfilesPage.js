@@ -10,16 +10,17 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 // @mui
-import { Container, Grid, Stack, Button } from '@mui/material';
+import { Container, Grid, Stack, Button, ButtonGroup } from '@mui/material';
 
 import { allProfilesActions } from '../store/actions/profileAction';
-import { updateAgGridData, updateCellData } from '../store/reducers/profileSlice';
 
 const AllProfilesPage = () => {
   // Handel state
 
   const { allProfile } = useSelector((state) => state.profile);
   const [datap, setDatap] = useState([]);
+  const [updatedData, setUpdatedData] = useState([]);
+  const [disabled, setDisabled] = useState(true);
   const dispatch = useDispatch();
 
   // Handel AG grid
@@ -110,6 +111,25 @@ const AllProfilesPage = () => {
 
   const onRowValueChanged = useCallback((event) => {
     const data = event.data;
+    const profileupdated = {
+      userId: data.user._id,
+      user: {
+        name: data.user.name,
+        email: data.user.email,
+      },
+      profile: {
+        status: data.status && data.status,
+        company: data?.company ? data.company : '',
+        location: data.location ? data.status : '',
+        active: data.active ? data.status : '',
+        phone: data.active ? data.status : '',
+      },
+    };
+    // setUpdatedData([
+    //   ...updatedData ,
+    //   { }
+    // ])
+
     console.log(data);
   }, []);
 
@@ -121,8 +141,14 @@ const AllProfilesPage = () => {
     <Container sx={{ py: 5 }}>
       <Grid container spacing={2}>
         <Grid container direction="row" justifyContent="flex-end" alignItems="flex-end" spacing={3} sx={{ my: 3 }}>
-          <Button variant="contained">Contained</Button>
-          <Button variant="contained">Contained</Button>
+          <ButtonGroup spacing={'20px'} aria-label="spacing button group">
+            <Button color="success" variant="contained">
+              Export
+            </Button>
+            <Button variant="contained" disabled={disabled}>
+              Save
+            </Button>
+          </ButtonGroup>
         </Grid>
 
         <Stack

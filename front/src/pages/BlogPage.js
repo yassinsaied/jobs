@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet-async';
 // @mui
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
@@ -20,10 +19,6 @@ const SORT_OPTIONS = [
 export default function BlogPage() {
   return (
     <>
-      <Helmet>
-        <title> Dashboard: Blog | Minimal UI </title>
-      </Helmet>
-
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
