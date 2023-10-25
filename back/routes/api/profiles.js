@@ -323,7 +323,7 @@ router.put("/educations/:id_educ", auth, async (req, res) => {
 //access private
 
 router.put(
-  "/updatemany",
+  "/updatemanyprofiles",
   [
     auth,
     [
@@ -352,20 +352,39 @@ router.put(
 
         const user = await User.findByIdAndUpdate(userId, userToupdate, {
           new: true,
-        });
+        }).populate("name");
 
         if (!user) {
           res.status(400).json({ message: "user Not ound" });
         } else {
-          if (!user.profile && profileToupdate) {
-            const profile = new Profile(profileToupdate);
-            await profile.save();
+          const profile = await Profile.findOneAndUpdate(
+            { user: userId },
+            profileToupdate
+          );
+          if (!profile) {
+            const newProfile = new Profile({
+              user: userId,
+              status: profileToupdate.status,
+              company: profileToupdate.company,
+              location: profileToupdate.location,
+              phone: profileToupdate.phone,
+              active: profileToupdate.active,
+            });
+            // console.log(newProfile);
+            await newProfile.save();
           }
 
-          if (user.profile && profileToupdate) {
-            Object.assign(user.profile, profileToupdate.profile);
-            await user.profile.save();
-          }
+          // if (!user.profile && profileToupdate) {
+          //   console.log("d'ont have p", user);
+          //   // const profile = new Profile(profileToupdate);
+          //   // await profile.save();
+          // }
+
+          // if (user.profile && profileToupdate) {
+          //   console.log(" have p ye ziibbi");
+          //   // Object.assign(user.profile, profileToupdate.profile);
+          //   // await user.profile.save();
+          // }
 
           updatedData.push(profileToUpdate);
         }
@@ -373,6 +392,7 @@ router.put(
 
       res.status(200).json({ message: "users updatetd", updatedData });
     } catch (error) {
+      console.log(error);
       if (error.kind == "ObjectId") {
         return res
           .status(400)
@@ -383,5 +403,19 @@ router.put(
     }
   }
 );
+
+// @rout delet api/profile/deletemany
+// description delete many profiles without user
+//access private
+
+router.delete("/deletemanyprofiles", auth, async (req, res) => {
+  try {
+    await Profile.deleteMany({ user: { $exists: false } });
+
+    res.status(200).json({ message: "profiles deleted" });
+  } catch (error) {
+    res.status(500).send("server error");
+  }
+});
 
 module.exports = router;

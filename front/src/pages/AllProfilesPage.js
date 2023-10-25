@@ -14,6 +14,15 @@ import { Container, Grid, Stack, Button, ButtonGroup } from '@mui/material';
 
 import { allProfilesActions } from '../store/actions/profileAction';
 
+function extractAndCreateObject(source, properties) {
+  return properties.reduce((result, property) => {
+    if (source[property] !== undefined) {
+      result[property] = source[property];
+    }
+    return result;
+  }, {});
+}
+
 const AllProfilesPage = () => {
   // Handel state
 
@@ -30,6 +39,11 @@ const AllProfilesPage = () => {
     {
       field: '_id',
       headerName: 'Profile',
+      hide: true,
+    },
+    {
+      field: 'user._id',
+      headerName: 'userId',
       hide: true,
     },
     {
@@ -91,10 +105,6 @@ const AllProfilesPage = () => {
     []
   );
 
-  const onGridReady = useCallback(() => {
-    dispatch(allProfilesActions());
-  }, [dispatch]);
-
   // const onCellValueChanged = (event) => {
   //   const { rowIndex, colDef, newValue } = event;
   //   console.log(rowIndex, colDef.field, newValue);
@@ -119,10 +129,10 @@ const AllProfilesPage = () => {
       },
       profile: {
         status: data.status && data.status,
-        company: data?.company ? data.company : '',
-        location: data.location ? data.status : '',
-        active: data.active ? data.status : '',
-        phone: data.active ? data.status : '',
+        company: data.status && data.status,
+        location: data.location && data.location,
+        active: data.active && data.active,
+        phone: data.phone && data.phone,
       },
     };
     // setUpdatedData([
@@ -135,6 +145,7 @@ const AllProfilesPage = () => {
 
   useEffect(() => {
     setDatap(allProfile);
+    console.log(allProfile);
   }, [allProfile]);
 
   return (
