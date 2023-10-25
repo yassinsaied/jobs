@@ -1,0 +1,56 @@
+{
+  "profiles": [
+    {
+      "userId": "64fa69227d70f3afd89e9c15",
+      "user": {
+        "name": "jams update",
+        "email": "jams@gmail.com"
+      },
+      "profile": {
+        "status": "web Developer",
+        "company": "Tesla",
+        "location": "Ny",
+        "phone": "363636555"
+      }
+    },
+    {
+      "userId": "64fa82b7cadd50c83f301708",
+      "user": {
+        "name": "nelson update",
+        "email": "nelson@gmail.com"
+      },
+      "profile": {
+        "status": "Python Developer",
+        "company": "salesfORCE",
+        "location": "California",
+        "phone": "88552233669"
+      }
+    },
+    {
+      "userId": "64fba144c94f84d241a278a3",
+      "user": {
+        "name": "Jax updated",
+        "email": "jax@hotmail.fr"
+      },
+      "profile": {
+        "status": "css Developer",
+        "company": "meta",
+        "location": "ireland",
+        "phone": "0022222336"
+      }
+    },
+    {
+      "userId": "651571abf42738ff6a243258",
+      "user": {
+        "username": "jhony updated",
+        "email": "jhony@example.com"
+      },
+      "profile": {
+        "status": "JS Developer",
+        "company": "Ecma International",
+        "location": "New Delhi",
+        "phone": "00111147825"
+      }
+    }
+  ]
+}

@@ -1,0 +1,474 @@
+{
+	"info": {
+		"_postman_id": "4bf0918d-905d-4502-b4fc-dba8603f0323",
+		"name": "MERN",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8692364"
+	},
+	"item": [
+		{
+			"name": "Auth & Users",
+			"item": [
+				{
+					"name": "RegisterUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"token man2\",\r\n    \"password\" : \"password\",\r\n    \"email\":\"token@maxn2.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/users",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRmOGJjNWJiZjA2NDJiODczNDllNDZlIiwibmFtZSI6InRva2VuIG1heG5yczMiLCJlbWFpbCI6InRva2VuQG1hcnN4bjIuY29tIn0sImlhdCI6MTY5NDAyMjc0NywiZXhwIjoxNjk0MDY1OTQ3fQ.YMJHFD2lrFxzohMLrSsUhrVV29XtCfsYPeGi4PEYy4xX5MbxQ8Ocpe8zOWBhEDj7wx7ULV34kvc_tqwN4YtSxk-nUJmM4YPROpNHOQujSC8YtcF-lJFhTzFCgncNlIhF63FEXY6GKfFF5KQKCYpAO31qx6TTpo4BWNYVRFc0MsnscvZQp4Xje4YtgBSebVQEv2JUOQw3xNfTFg0Ca3WJK1-yIgE3EljMDNTCLbbODY-Kgu_mcmkP2WMTXsBGRngr9oSayE9d1IXEckKo0tpeViIr4O0oviMjoUxOhJMDCUsM5XfFwQcdaBuJbulwp6dySzHH9qpYULCGXfueAyUk-Q",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n     \"email\" : \"redman@exmp.com\",\r\n     \"password\" : \"password\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"login"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "MyProfile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRmYmExNDRjOTRmODRkMjQxYTI3OGEzIiwiZW1haWwiOiJ1c2VyQDMuY29tIiwibmFtZSI6InVzZXIgMyIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvZDQxNWYwZTMwYzQ3MWRmZGQ5YmM0ZjgyNzMyOWVmNDgifSwiaWF0IjoxNjk2MDg3MjQ5LCJleHAiOjE2OTYxMzA0NDl9.i1zxvPHZRwsJmtdDSuNTMXwVbL6VK6Pn0tffXIuySDoUtNYTHKBLOeUHbaKh7fZQRUx2kcSUG1D7ih66sTwTF6Q8bf6YEfdG4jY85WMw3T_fZBu2QRNV-m3uGHwRSv66EM_5h2MiH_QDxnvolJ0qpro-1OEeJ-fXiTgr3YzmQMyEDicaPLwoN1V_sRNjLbHBkUpTlkxm7rBEAVldS4_21zN_uWgW4KmA_2Yh5a1Jr6HnyibpurIPVzFlwnvAOcYo4oJGXjsPEVSFRKkZQm7OPAg-MapAcB6-IXWysD_xvUpJxL9wVs7AAJL6CvYPl6WrsX730YJM5eJnWRmPYXovtg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/profiles/me",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profiles",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostUpdateProfile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyMzM4YzcyMGMzM2RhNDI0ZTM2ZjlkIiwibmFtZSI6InJlZG1hbiIsImVtYWlsIjoicmVkbWFuQGV4bXAuY29tIn0sImlhdCI6MTY5NjgwNzExMSwiZXhwIjoxNjk2ODUwMzExfQ.IBeZvlmD-pllZG4tvUw09sj25bAFpoYsvZ3OPMeNwvZXy2itA_tZ44n71QpYQP7xiwpeqr2ATopkS17QhSJFyieofkbeaeF65N5V9_yYByBCffZwIrqn8bb2W0ZibthECGSLIgzVvAJZbsFcM6XdRX1FRzUgwzWF9ii7NyOwXJ_uW4feiO06GDqSlo0w_xHkv_-etXgm1W6dYdwaZqWTfHTvMt6BhkDhNXnzKJDOqTeGslOqBkoS8elKECwWBKfVWiTmq3m7VTKpUxLM4lOylYPvhevfqZ3izfubZjRRZmd-KG49LupKYlLeBuToANayHZkJ1vBKOlfVw-wrZ5KxGQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"status\" : \"Security Dev\",\r\n     \"skills\": \"sisqo , Red Hat , Azure , Unix\",\r\n     \"company\" : \"salesForce\",\r\n     \"phone\" : \"55456789\",\r\n     \"youtube\" :\"redTube\",\r\n     \"instagrame\" :\"the redman\",\r\n     \"linkidin\" :\"redman PRO\",\r\n     \"github\" : \"https://github.com/redman\",\r\n     \"location\" : \"Chicago\"\r\n     \r\n   \r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/profiles",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AllProfiles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProfileByUserId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeactivateProfile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostExperiences",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletExperience",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostEducations",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRmYmExNDRjOTRmODRkMjQxYTI3OGEzIiwiZW1haWwiOiJ1c2VyQDMuY29tIn0sImlhdCI6MTY5NDg3NTg2NiwiZXhwIjoxNjk0OTE5MDY2fQ.PEwsAQuh8WivXnSLy2eDlgZRQ_CiYqroq9QDbDyfGNMkNM-6NOyXvGCruUnsFnv-suI_wo7SWp40idTAHeRntc8eZFdzZcnkPha2cxcKdsY57tFUCwvXCCQAir5upTpkKyuKyxTrfRyFijSjijyd4_jKrlly0grlKP8XXyHsKFPsrm2MqzXCXIPSP2-ZwG4ARroHKgq8LDHPMe5E8wd4N-yvnktY7PUMfPTFChNWXoY6Jh-wNBvYV7b8UG-2m9tHojiX1QaI0Epllela4BAnR_lyt_YU4q4HVwoUuQiUrV4WME6HVT9d6kiBMkKeWvDWG6gxH0nv7dJdJwxquiIFPQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"experiences\" : [\r\n        {\r\n    \"school\" : \"isg\",\r\n    \"degree\" : \"maitrise\",\r\n    \"fieledofstudy\" : \"Tunis\",\r\n    \"begin\" : \"2015/05/06\",\r\n    \"end\" :  \"219/05/05\"\r\n\r\n    },      {\r\n    \"title\" : \"sssss\",\r\n    \"company\" : \"PG\",\r\n    \"location\" : \"Tunis\",\r\n    \"begin\" : \"2015/05/06\",\r\n    \"end\" :  \"219/05/05\"\r\n    }]}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/profiles/educations",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profiles",
+								"educations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEducation",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRmYmExNDRjOTRmODRkMjQxYTI3OGEzIiwiZW1haWwiOiJ1c2VyQDMuY29tIn0sImlhdCI6MTY5NDg3NTg2NiwiZXhwIjoxNjk0OTE5MDY2fQ.PEwsAQuh8WivXnSLy2eDlgZRQ_CiYqroq9QDbDyfGNMkNM-6NOyXvGCruUnsFnv-suI_wo7SWp40idTAHeRntc8eZFdzZcnkPha2cxcKdsY57tFUCwvXCCQAir5upTpkKyuKyxTrfRyFijSjijyd4_jKrlly0grlKP8XXyHsKFPsrm2MqzXCXIPSP2-ZwG4ARroHKgq8LDHPMe5E8wd4N-yvnktY7PUMfPTFChNWXoY6Jh-wNBvYV7b8UG-2m9tHojiX1QaI0Epllela4BAnR_lyt_YU4q4HVwoUuQiUrV4WME6HVT9d6kiBMkKeWvDWG6gxH0nv7dJdJwxquiIFPQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/profiles/educations/6505c8970533e5b251e47908",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profiles",
+								"educations",
+								"6505c8970533e5b251e47908"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddPost",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/posts",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllPosts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePost",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePost",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LikeDeslike",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addComments",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRmYTgyYjdjYWRkNTBjODNmMzAxNzA4IiwiZW1haWwiOiJ1c2VyQDIuY29tIiwibmFtZSI6InVzZXIgMiIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvZDQxNWYwZTMwYzQ3MWRmZGQ5YmM0ZjgyNzMyOWVmNDgifSwiaWF0IjoxNjk1MjI0NzY4LCJleHAiOjE2OTUyNjc5Njh9.k-1Ss9-PAsZgW6RzPBHvgoFIkr7BUL9vDSMyQY8436buityb1q28s_wz1lPDFm0tW9IJv5T3-XV33_TkZizfrU4FUH5j9aRkqxuWbK1gpVBPJc0XJQHRHlOEp0Lpc6eGb3xCi1sfPi4PX5RAa8wc9U9n487J0nC2c4LfcRfkFXJsSfi3pP-F53rYQxKJ_5gXRmBk8IWGECI0w1fx04cZOacmgEPj1rJ22PbyVDwmohEDtjIzNcEOaoJlkz07kXprKBDd92xjMhp1u4SP_PeaM3oYCzTkwAEarMJstXP68y0y_wrixGPLl25ZXmd3jzXztS3FqiggpqWkox9mANtKIg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\" : \"first comment\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/posts/comment/650878f0413512ab7b473a7d",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"posts",
+								"comment",
+								"650878f0413512ab7b473a7d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteComment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Many Profiles",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyMzM4YzcyMGMzM2RhNDI0ZTM2ZjlkIiwiZW1haWwiOiJyZWRtYW5AZXhtcC5jb20iLCJuYW1lIjoicmVkbWFuIiwiYXZhdGFyIjoiLy93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci9kNDE1ZjBlMzBjNDcxZGZkZDliYzRmODI3MzI5ZWY0OCJ9LCJpYXQiOjE2OTgxODMzODYsImV4cCI6MTY5ODIyNjU4Nn0.Cgb06wX5Bz1tcuzMKCjUhh9qTyhX6jsjWSErq0dMVXcOjr4JvTlRyZlmkQBV7pdNjJspSN3kBfRrVqlI_NDjdlv6ztrmH4aQsJOhkw0BiVnkRW23MvnjRtALgUfs3xS3u_0X63Zb3gucBTkSkCHOk2KwNdbNR241qoXirKTLs80yySZ6r2pcQdiTYbhyy_Qi-ZKO8Bm7wLqKi-UUWhpr2QjEYq1wRsMKppprbK5OBBwNDUbJnpb8LcUerZKIimADzv6XZIjjirdpIxeZi5c8JCqigm8YrrbFjz3rcjwkstY9amffVo_zjaErcUNaQ2YajOt7etJO7KD2CqELc9jRbQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"profiles\": [\r\n    {\r\n      \"userId\": \"64fa69227d70f3afd89e9c15\",\r\n      \"user\": {\r\n        \"name\": \"jax update 2\"\r\n      \r\n      },\r\n      \"profile\": {\r\n        \"status\": \"web Developer\",\r\n        \"company\": \"Tesla\",\r\n        \"location\": \"NEW JERSY\",\r\n        \"phone\": \"363636555\"\r\n      }\r\n    },\r\n    {\r\n      \"userId\": \"64fa82b7cadd50c83f301708\",\r\n      \"user\": {\r\n        \"name\": \"nelson update 2\",\r\n        \"email\": \"nelson@gmail.com\"\r\n      },\r\n      \"profile\": {\r\n        \"status\": \"Python Developer\",\r\n        \"company\": \"salesfORCE FR\",\r\n        \"location\": \"PARIS\"\r\n       \r\n      }\r\n    },\r\n    {\r\n      \"userId\": \"64fba144c94f84d241a278a3\",\r\n      \"user\": {\r\n        \"name\": \"nik updated 2\",\r\n        \"email\": \"nik@hotmail.fr\"\r\n      },\r\n      \"profile\": {\r\n        \"status\": \"css Developer\",\r\n        \"company\": \"meta\",\r\n        \"location\": \"SCOTLAND \",\r\n        \"phone\": \"0022222336\"\r\n      }\r\n    },\r\n    {\r\n      \"userId\": \"653842944f8a01324248758f\",\r\n      \"user\": {\r\n        \"username\": \"method updated ONE\",\r\n        \"email\": \"method@man.com\"\r\n      },\r\n      \"profile\": {\r\n        \"status\": \"SQL Developer\",\r\n        \"company\": \"IBM \",\r\n      \r\n        \"phone\": \"33225893\"\r\n      }\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/profiles/updatemanyprofiles",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profiles",
+								"updatemanyprofiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletemanyProfiles",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyMzM4YzcyMGMzM2RhNDI0ZTM2ZjlkIiwiZW1haWwiOiJyZWRtYW5AZXhtcC5jb20iLCJuYW1lIjoicmVkbWFuIiwiYXZhdGFyIjoiLy93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci9kNDE1ZjBlMzBjNDcxZGZkZDliYzRmODI3MzI5ZWY0OCJ9LCJpYXQiOjE2OTgxODMzODYsImV4cCI6MTY5ODIyNjU4Nn0.Cgb06wX5Bz1tcuzMKCjUhh9qTyhX6jsjWSErq0dMVXcOjr4JvTlRyZlmkQBV7pdNjJspSN3kBfRrVqlI_NDjdlv6ztrmH4aQsJOhkw0BiVnkRW23MvnjRtALgUfs3xS3u_0X63Zb3gucBTkSkCHOk2KwNdbNR241qoXirKTLs80yySZ6r2pcQdiTYbhyy_Qi-ZKO8Bm7wLqKi-UUWhpr2QjEYq1wRsMKppprbK5OBBwNDUbJnpb8LcUerZKIimADzv6XZIjjirdpIxeZi5c8JCqigm8YrrbFjz3rcjwkstY9amffVo_zjaErcUNaQ2YajOt7etJO7KD2CqELc9jRbQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/profiles/deletemanyprofiles",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profiles",
+								"deletemanyprofiles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
