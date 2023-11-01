@@ -32,6 +32,7 @@ const profileSlice = createSlice({
       })
       .addCase(myProfileAction.fulfilled, (state, action) => {
         state.loading = false;
+
         state.currentProfile = action.payload;
       })
       .addCase(myProfileAction.rejected, (state) => {

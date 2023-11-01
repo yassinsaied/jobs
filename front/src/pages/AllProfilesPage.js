@@ -14,6 +14,8 @@ import { Container, Grid, Stack, Button, ButtonGroup } from '@mui/material';
 
 import { allProfilesActions } from '../store/actions/profileAction';
 
+import { updateAgGridData } from '../store/reducers/profileSlice';
+
 function extractAndCreateObject(source, properties) {
   return properties.reduce((result, property) => {
     if (source[property] !== undefined) {
@@ -26,7 +28,8 @@ function extractAndCreateObject(source, properties) {
 const AllProfilesPage = () => {
   // Handel state
 
-  const { allProfile } = useSelector((state) => state.profile);
+  const { allProfile, loading } = useSelector((state) => state.profile);
+
   const [datap, setDatap] = useState([]);
   const [updatedData, setUpdatedData] = useState([]);
   const [disabled, setDisabled] = useState(true);
@@ -105,20 +108,6 @@ const AllProfilesPage = () => {
     []
   );
 
-  // const onCellValueChanged = (event) => {
-  //   const { rowIndex, colDef, newValue } = event;
-  //   console.log(rowIndex, colDef.field, newValue);
-  //   dispatch(updateCellData({ rowIndex, colId: colDef.field, newValue }));
-  // };
-
-  // useEffect(() => {
-  //   dispatch(updateAgGridData(datap));
-  // }, [dispatch]);
-
-  // const onCellValueChanged = useCallback((event) => {
-  //   console.log(`onCellValueChanged: ${event.colDef.field} ${event.newValue}`);
-  // }, []);
-
   const onRowValueChanged = useCallback((event) => {
     const data = event.data;
     const profileupdated = {
@@ -144,9 +133,14 @@ const AllProfilesPage = () => {
   }, []);
 
   useEffect(() => {
-    setDatap(allProfile);
-    console.log(allProfile);
+    if (allProfile === datap) {
+      dispatch(allProfilesActions());
+    }
   }, [allProfile]);
+
+  useEffect(() => {
+    setDatap(allProfile);
+  }, []);
 
   return (
     <Container sx={{ py: 5 }}>
@@ -178,9 +172,6 @@ const AllProfilesPage = () => {
             pagination="true"
             paginationPageSize={10}
             editType={'fullRow'}
-            // onCellValueChanged={onCellValueChanged}
-            // onCellEditingStarted={onCellEditingStarted}
-            // onCellValueChanged={onCellValueChanged}
             onRowValueChanged={onRowValueChanged}
           />
         </Stack>
