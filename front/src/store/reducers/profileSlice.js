@@ -12,7 +12,7 @@ const profileSlice = createSlice({
   initialState,
   reducers: {
     updateAgGridData: (state, action) => {
-      console.log(action.payload);
+      // console.log('sssssssssssssss', action.payload);
       state.allProfile = action.payload;
     },
 

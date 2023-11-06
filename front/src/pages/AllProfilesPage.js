@@ -1,5 +1,5 @@
 // @react hooks
-import { useMemo, useState, useEffect, useCallback, useRef } from 'react';
+import { useMemo, useState, useEffect, useCallback, useRef, forwardRef } from 'react';
 // @redux
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -10,7 +10,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 // @mui
-import { Container, Grid, Stack, Button, ButtonGroup } from '@mui/material';
+import { Container, Grid, Stack, Button, ButtonGroup, Switch } from '@mui/material';
 
 import { allProfilesActions } from '../store/actions/profileAction';
 
@@ -25,12 +25,34 @@ function extractAndCreateObject(source, properties) {
   }, {});
 }
 
+const AgSwitch = forwardRef(({ params }, ref) => (
+  <Switch
+    value={params.value}
+    // checked={params.value}
+    size="small"
+    inputRef={ref}
+    onClick={() => {
+      console.log(params.value);
+      ref.current.value = !params.value;
+      ref.current.checked = !params.value;
+      console.log('Checkbox value:', ref.current.value);
+    }}
+  />
+));
+
+// const Buttoncheck = (params) => {
+//   const checkActiveRef = useRef(null);
+//   return (
+//
+//   );
+// };
+
 const AllProfilesPage = () => {
   // Handel state
 
   const { allProfile, loading } = useSelector((state) => state.profile);
 
-  const [datap, setDatap] = useState([]);
+  const [agGridProfils, setAgGridProfils] = useState([]);
   const [updatedData, setUpdatedData] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const dispatch = useDispatch();
@@ -38,6 +60,7 @@ const AllProfilesPage = () => {
   // Handel AG grid
 
   const gridRef = useRef();
+  const checkActiveRef = useRef(null);
   const [columnDefs, setColumnDefs] = useState([
     {
       field: '_id',
@@ -54,7 +77,6 @@ const AllProfilesPage = () => {
       headerName: 'Name',
       minWidth: 100,
       filter: 'agTextColumnFilter',
-      editable: true,
     },
     {
       field: 'status',
@@ -92,6 +114,27 @@ const AllProfilesPage = () => {
       headerName: 'Active',
       minWidth: 50,
       filter: false,
+      cellRenderer: (params) => <AgSwitch params={params} ref={checkActiveRef} />,
+      cellEditor: (params) => <AgSwitch params={params} ref={checkActiveRef} />,
+      // cellRenderer: (params) => { console.log()
+      //   return <Switch size="small" inputRef={checkActiveRef} checked={params.value} value={params.value} />;
+      // },
+      // cellEditor: (params) => {
+      //   return (
+      //     <Switch
+      //       inputRef={checkActiveRef}
+      //       size="small"
+      //       onClick={() => {
+      //         console.log(params.value);
+      //         checkActiveRef.current.value = !params.value;
+      //         checkActiveRef.current.checked = !params.value;
+      //         console.log('Checkbox value:', checkActiveRef.current.value);
+      //       }}
+      //       checked={!params.value}
+      //       value={!params.value}
+      //     />
+      //   );
+      // },
     },
   ]);
 
@@ -107,6 +150,15 @@ const AllProfilesPage = () => {
 
     []
   );
+  //  Hydrate Ag grid
+  useEffect(() => {
+    if (allProfile.length !== 0) {
+      const deepClone = structuredClone(allProfile);
+      setAgGridProfils(deepClone);
+    } else {
+      dispatch(allProfilesActions());
+    }
+  }, [allProfile]);
 
   const onRowValueChanged = useCallback((event) => {
     const data = event.data;
@@ -129,17 +181,7 @@ const AllProfilesPage = () => {
     //   { }
     // ])
 
-    console.log(data);
-  }, []);
-
-  useEffect(() => {
-    if (allProfile === datap) {
-      dispatch(allProfilesActions());
-    }
-  }, [allProfile]);
-
-  useEffect(() => {
-    setDatap(allProfile);
+    console.log(profileupdated);
   }, []);
 
   return (
@@ -165,7 +207,7 @@ const AllProfilesPage = () => {
         >
           <AgGridReact
             ref={gridRef}
-            rowData={datap}
+            rowData={agGridProfils}
             columnDefs={columnDefs}
             rowSelection={'multiple'}
             defaultColDef={defaultColDef}
