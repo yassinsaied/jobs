@@ -25,20 +25,30 @@ function extractAndCreateObject(source, properties) {
   }, {});
 }
 
-const AgSwitch = forwardRef(({ params }, ref) => (
-  <Switch
-    value={params.value}
-    // checked={params.value}
+const AgSwitch = ({ params }) => {
+  const [checked , setChecked] = useState(params.value)
+
+ return( <Switch
+    value={checked}
+    checked={checked}
     size="small"
-    inputRef={ref}
+    // inputRef={ref}
     onClick={() => {
       console.log(params.value);
-      ref.current.value = !params.value;
-      ref.current.checked = !params.value;
-      console.log('Checkbox value:', ref.current.value);
+      setChecked(!checked)
+      // ref.current.value = !params.value;
+      // ref.current.checked = !params.value;
+      // console.log('Checkbox value:', ref.current.value);
     }}
-  />
-));
+    onChange={() => {
+     
+      setChecked(!checked)
+      // ref.current.value = !params.value;
+      // ref.current.checked = !params.value;
+      // console.log('Checkbox value:', ref.current.value);
+    }}
+  />)
+  };
 
 // const Buttoncheck = (params) => {
 //   const checkActiveRef = useRef(null);
@@ -55,6 +65,7 @@ const AllProfilesPage = () => {
   const [agGridProfils, setAgGridProfils] = useState([]);
   const [updatedData, setUpdatedData] = useState([]);
   const [disabled, setDisabled] = useState(true);
+  const [cheked, setCheked] = useState(null);
   const dispatch = useDispatch();
 
   // Handel AG grid
@@ -113,28 +124,10 @@ const AllProfilesPage = () => {
       field: 'active',
       headerName: 'Active',
       minWidth: 50,
-      filter: false,
-      cellRenderer: (params) => <AgSwitch params={params} ref={checkActiveRef} />,
-      cellEditor: (params) => <AgSwitch params={params} ref={checkActiveRef} />,
-      // cellRenderer: (params) => { console.log()
-      //   return <Switch size="small" inputRef={checkActiveRef} checked={params.value} value={params.value} />;
-      // },
-      // cellEditor: (params) => {
-      //   return (
-      //     <Switch
-      //       inputRef={checkActiveRef}
-      //       size="small"
-      //       onClick={() => {
-      //         console.log(params.value);
-      //         checkActiveRef.current.value = !params.value;
-      //         checkActiveRef.current.checked = !params.value;
-      //         console.log('Checkbox value:', checkActiveRef.current.value);
-      //       }}
-      //       checked={!params.value}
-      //       value={!params.value}
-      //     />
-      //   );
-      // },
+     filter: false,
+      cellRenderer: (params) =>  <AgSwitch params={params}  />,
+      cellEditor: (params) => <AgSwitch params={params} />, 
+    
     },
   ]);
 
