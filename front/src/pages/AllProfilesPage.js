@@ -1,5 +1,5 @@
 // @react hooks
-import { useMemo, useState, useEffect, useCallback, useRef, forwardRef } from 'react';
+import { useMemo, useState, useEffect, useCallback, useRef, forwardRef, useImperativeHandle } from 'react';
 // @redux
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -25,37 +25,52 @@ function extractAndCreateObject(source, properties) {
   }, {});
 }
 
-const AgSwitch = ({ params }) => {
-  const [checked , setChecked] = useState(params.value)
+const AgSwitch = forwardRef((props, ref) => {
+  const [checked, setChecked] = useState(props.value);
+  const checkActiveRef = useRef(null);
 
- return( <Switch
-    value={checked}
-    checked={checked}
-    size="small"
-    // inputRef={ref}
-    onClick={() => {
-      console.log(params.value);
-      setChecked(!checked)
-      // ref.current.value = !params.value;
-      // ref.current.checked = !params.value;
-      // console.log('Checkbox value:', ref.current.value);
-    }}
-    onChange={() => {
-     
-      setChecked(!checked)
-      // ref.current.value = !params.value;
-      // ref.current.checked = !params.value;
-      // console.log('Checkbox value:', ref.current.value);
-    }}
-  />)
-  };
+  useImperativeHandle(ref, () => {
+    return {
+      // the final value to send to the grid, on completion of editing
+      getValue() {
+        // this simple editor doubles any value entered into the input
+        return checked;
+      },
 
-// const Buttoncheck = (params) => {
-//   const checkActiveRef = useRef(null);
-//   return (
-//
-//   );
-// };
+      // Gets called once before editing starts, to give editor a chance to
+      // cancel the editing before it even starts.
+      isCancelBeforeStart() {
+        return false;
+      },
+
+      // Gets called once when editing is finished (eg if Enter is pressed).
+      // If you return true, then the result of the edit will be ignored.
+      isCancelAfterEnd() {
+        // our editor will reject any value greater than 1000
+        return false;
+      },
+    };
+  });
+
+  return (
+    <Switch
+      value={checked}
+      checked={checked}
+      size="small"
+      inputRef={checkActiveRef}
+      onClick={() => {
+        setChecked(!checked);
+        console.log(checked);
+        // ref.current.value = !params.value;
+        // ref.current.checked = !params.value;
+        // console.log('Checkbox value:', ref.current.value);
+      }}
+      onChange={() => {
+        setChecked(!checked);
+      }}
+    />
+  );
+});
 
 const AllProfilesPage = () => {
   // Handel state
@@ -71,7 +86,7 @@ const AllProfilesPage = () => {
   // Handel AG grid
 
   const gridRef = useRef();
-  const checkActiveRef = useRef(null);
+
   const [columnDefs, setColumnDefs] = useState([
     {
       field: '_id',
@@ -124,10 +139,9 @@ const AllProfilesPage = () => {
       field: 'active',
       headerName: 'Active',
       minWidth: 50,
-     filter: false,
-      cellRenderer: (params) =>  <AgSwitch params={params}  />,
-      cellEditor: (params) => <AgSwitch params={params} />, 
-    
+      filter: false,
+      cellRenderer: AgSwitch,
+      cellEditor: AgSwitch,
     },
   ]);
 
