@@ -33,7 +33,7 @@ const AgSwitch = forwardRef((props, ref) => {
     return {
       // the final value to send to the grid, on completion of editing
       getValue() {
-        // this simple editor doubles any value entered into the input
+      
         return checked;
       },
 
@@ -60,14 +60,12 @@ const AgSwitch = forwardRef((props, ref) => {
       inputRef={checkActiveRef}
       onClick={() => {
         setChecked(!checked);
-        console.log(checked);
-        // ref.current.value = !params.value;
-        // ref.current.checked = !params.value;
-        // console.log('Checkbox value:', ref.current.value);
+        if(props.setValue) {props.setValue(!checked)}
+         
+      
+     
       }}
-      onChange={() => {
-        setChecked(!checked);
-      }}
+ 
     />
   );
 });
@@ -142,6 +140,7 @@ const AllProfilesPage = () => {
       filter: false,
       cellRenderer: AgSwitch,
       cellEditor: AgSwitch,
+  
     },
   ]);
 
