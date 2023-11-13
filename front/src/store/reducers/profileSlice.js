@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { myProfileAction, allProfilesActions } from '../actions/profileAction';
+import { myProfileAction, allProfilesActions, updateManyProfilesActions } from '../actions/profileAction';
 
 const initialState = {
   currentProfile: {},
@@ -52,6 +52,8 @@ const profileSlice = createSlice({
       .addCase(allProfilesActions.rejected, (state) => {
         state.loading = false;
       });
+
+    // update Agride
   },
 });
 

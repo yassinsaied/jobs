@@ -16,14 +16,35 @@ import { allProfilesActions } from '../store/actions/profileAction';
 
 import { updateAgGridData } from '../store/reducers/profileSlice';
 
-function extractAndCreateObject(source, properties) {
-  return properties.reduce((result, property) => {
-    if (source[property] !== undefined) {
-      result[property] = source[property];
-    }
-    return result;
-  }, {});
-}
+const handleToggleMyList = (profileData, arrayOfProfiles) => {
+  const profileToUpdate = {
+    userId: profileData.user._id,
+    user: {
+      name: profileData.user.name,
+      email: profileData.user.email,
+    },
+    profile: {
+      status: profileData.status && profileData.status,
+      company: profileData.company && profileData.company,
+      location: profileData.location && profileData.location,
+      active: profileData.active && profileData.active,
+      phone: profileData.phone && profileData.phone,
+    },
+  };
+
+  const newArrayOfProfiles = [...arrayOfProfiles];
+
+  const profileToFind = newArrayOfProfiles.findIndex((profile) => {
+    return profile.userId === profileData.user._id;
+  });
+
+  if (profileToFind !== -1) {
+    newArrayOfProfiles[profileToFind] = profileToUpdate;
+  } else {
+    newArrayOfProfiles.push(profileToUpdate);
+  }
+  return newArrayOfProfiles;
+};
 
 const AgSwitch = forwardRef((props, ref) => {
   const [checked, setChecked] = useState(props.value);
@@ -33,7 +54,6 @@ const AgSwitch = forwardRef((props, ref) => {
     return {
       // the final value to send to the grid, on completion of editing
       getValue() {
-      
         return checked;
       },
 
@@ -59,13 +79,18 @@ const AgSwitch = forwardRef((props, ref) => {
       size="small"
       inputRef={checkActiveRef}
       onClick={() => {
+        // console.log(props.updatedData);
         setChecked(!checked);
-        if(props.setValue) {props.setValue(!checked)}
-         
-      
-     
+        if (props.setValue) {
+          // set new value of actice data
+          props.setValue(!checked);
+          props.setUpdatedData((updatedData) => handleToggleMyList(props.data, updatedData));
+          // props.setUpdatedData(handleToggleMyList(props.data, props.updatedData));
+        }
+
+        // enable  active Button
+        if (props.disabledSaveButton) props.setDisabledSaveButton(false);
       }}
- 
     />
   );
 });
@@ -77,13 +102,39 @@ const AllProfilesPage = () => {
 
   const [agGridProfils, setAgGridProfils] = useState([]);
   const [updatedData, setUpdatedData] = useState([]);
-  const [disabled, setDisabled] = useState(true);
+  const [disabledSaveButton, setDisabledSaveButton] = useState(true);
   const [cheked, setCheked] = useState(null);
   const dispatch = useDispatch();
 
   // Handel AG grid
 
   const gridRef = useRef();
+
+  const onRowValueChanged = useCallback((event) => {
+    const data = event.data;
+    // const profileupdated = {
+    //   userId: data.user._id,
+    //   user: {
+    //     name: data.user.name,
+    //     email: data.user.email,
+    //   },
+    //   profile: {
+    //     status: data.status && data.status,
+    //     company: data.status && data.status,
+    //     location: data.location && data.location,
+    //     active: data.active && data.active,
+    //     phone: data.phone && data.phone,
+    //   },
+    // };
+    setUpdatedData((updatedData) => handleToggleMyList(data, updatedData));
+    if (disabledSaveButton) setDisabledSaveButton(false);
+    // setUpdatedData(handleToggleMyList(data, updatedData));
+    // setUpdatedData((updatedData) => [...updatedData, profileupdated]);
+
+    // enable  active Button
+
+    setDisabledSaveButton(false);
+  }, []);
 
   const [columnDefs, setColumnDefs] = useState([
     {
@@ -139,8 +190,13 @@ const AllProfilesPage = () => {
       minWidth: 50,
       filter: false,
       cellRenderer: AgSwitch,
+      cellRendererParams: {
+        disabledSaveButton,
+        setDisabledSaveButton,
+        setUpdatedData,
+        updatedData,
+      },
       cellEditor: AgSwitch,
-  
     },
   ]);
 
@@ -157,6 +213,7 @@ const AllProfilesPage = () => {
     []
   );
   //  Hydrate Ag grid
+
   useEffect(() => {
     if (allProfile.length !== 0) {
       const deepClone = structuredClone(allProfile);
@@ -166,29 +223,11 @@ const AllProfilesPage = () => {
     }
   }, [allProfile]);
 
-  const onRowValueChanged = useCallback((event) => {
-    const data = event.data;
-    const profileupdated = {
-      userId: data.user._id,
-      user: {
-        name: data.user.name,
-        email: data.user.email,
-      },
-      profile: {
-        status: data.status && data.status,
-        company: data.status && data.status,
-        location: data.location && data.location,
-        active: data.active && data.active,
-        phone: data.phone && data.phone,
-      },
+  const handelSaveProfiles = () => {
+    const payloadProfileToUpdate = {
+      profiles: updatedData,
     };
-    // setUpdatedData([
-    //   ...updatedData ,
-    //   { }
-    // ])
-
-    console.log(profileupdated);
-  }, []);
+  };
 
   return (
     <Container sx={{ py: 5 }}>
@@ -198,7 +237,7 @@ const AllProfilesPage = () => {
             <Button color="success" variant="contained">
               Export
             </Button>
-            <Button variant="contained" disabled={disabled}>
+            <Button variant="contained" disabled={disabledSaveButton} onClick={() => handelSaveProfiles()}>
               Save
             </Button>
           </ButtonGroup>
