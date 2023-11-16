@@ -38,7 +38,6 @@ const profileSlice = createSlice({
       .addCase(myProfileAction.rejected, (state) => {
         state.loading = false;
       });
-    // update profile
 
     // Get All Profiles
     builder
@@ -54,6 +53,19 @@ const profileSlice = createSlice({
       });
 
     // update Agride
+
+    // Get All Profiles
+    builder
+      .addCase(updateManyProfilesActions.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateManyProfilesActions.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log(action.payload);
+      })
+      .addCase(updateManyProfilesActions.rejected, (state) => {
+        state.loading = false;
+      });
   },
 });
 

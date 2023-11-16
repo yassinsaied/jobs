@@ -12,7 +12,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 // @mui
 import { Container, Grid, Stack, Button, ButtonGroup, Switch } from '@mui/material';
 
-import { allProfilesActions } from '../store/actions/profileAction';
+import { allProfilesActions, updateManyProfilesActions } from '../store/actions/profileAction';
 
 import { updateAgGridData } from '../store/reducers/profileSlice';
 
@@ -212,10 +212,11 @@ const AllProfilesPage = () => {
 
     []
   );
+
   //  Hydrate Ag grid
 
   useEffect(() => {
-    if (allProfile.length !== 0) {
+    if (allProfile.length !== 0 || agGridProfils !== allProfile) {
       const deepClone = structuredClone(allProfile);
       setAgGridProfils(deepClone);
     } else {
@@ -227,6 +228,12 @@ const AllProfilesPage = () => {
     const payloadProfileToUpdate = {
       profiles: updatedData,
     };
+
+    dispatch(updateManyProfilesActions(payloadProfileToUpdate)).then(() => {
+      dispatch(allProfilesActions());
+      const deepClone = structuredClone(allProfile);
+      setAgGridProfils(deepClone);
+    });
   };
 
   return (
