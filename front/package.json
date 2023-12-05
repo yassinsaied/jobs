@@ -1,10 +1,13 @@
 {
   "name": "@minimal/material-kit-react",
+  "homepage": "https://yassinsaied.github.io/jobs",
   "author": "minimals.cc",
   "licence": "MIT",
   "version": "1.7.0",
   "private": false,
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -83,6 +86,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "gh-pages": "^6.1.0",
     "prettier": "^2.8.4"
   },
   "overrides": {
